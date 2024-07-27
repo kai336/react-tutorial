@@ -1,0 +1,109 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+ul {
+  list-style-type: none; /* リストマーカーを非表示にする */
+  padding: 0; /* デフォルトのパディングを削除する */
+}
+
+li {
+  margin-bottom: 8px; /* リストアイテム間のスペースを調整する（任意） */
+}
+
+/* フォーム全体のスタイル */
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px; /* フォームの最大幅を設定 */
+  margin: 0 auto; /* フォームを中央に配置 */
+  padding: 20px; /* フォーム内の余白 */
+  border: 1px solid #ddd; /* 薄い境界線 */
+  border-radius: 8px; /* 角を丸くする */
+  background-color: #f9f9f9; /* 背景色 */
+}
+
+/* テキスト入力フィールド */
+input[type="text"] {
+  padding: 10px; /* 内部の余白 */
+  margin-bottom: 10px; /* 下の余白 */
+  border: 1px solid #ccc; /* 境界線の色 */
+  border-radius: 4px; /* 角を丸くする */
+  font-size: 16px; /* フォントサイズ */
+  width: 90%; /* 幅を100%にして親要素に合わせる */
+}
+
+/* サブミットボタン */
+input[type="submit"] {
+  padding: 10px 20px; /* 内部の余白 */
+  border: none; /* デフォルトの境界線を削除 */
+  border-radius: 4px; /* 角を丸くする */
+  background-color: #007bff; /* ボタンの背景色 */
+  color: white; /* 文字色 */
+  font-size: 16px; /* フォントサイズ */
+  cursor: pointer; /* カーソルをポインターにする */
+  transition: background-color 0.3s ease; /* ホバー時の背景色変更のアニメーション */
+}
+
+/* サブミットボタンのホバー時のスタイル */
+input[type="submit"]:hover {
+  background-color: #0056b3; /* ホバー時の背景色 */
+}
+
+/* フォーム内のラベル */
+label {
+  margin-bottom: 5px; /* 下の余白 */
+  font-size: 16px; /* フォントサイズ */
+}
+/* チェックボックスラベル */
+label.checkbox-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* 下の余白 */
+  font-size: 16px; /* フォントサイズ */
+}
+
+/* チェックボックス */
+input[type="checkbox"] {
+  margin-right: 10px; /* チェックボックスとラベルの間の余白 */
+  cursor: pointer; /* カーソルをポインターにする */
+}
