@@ -107,3 +107,37 @@ input[type="checkbox"] {
   margin-right: 10px; /* チェックボックスとラベルの間の余白 */
   cursor: pointer; /* カーソルをポインターにする */
 }
+
+/* ボタン全体のスタイル */
+.button {
+  padding: 10px 10px; /* 内部の余白 */
+  border: none; /* デフォルトの境界線を削除 */
+  border-radius: 4px; /* 角を丸くする */
+  background-color: #ff4d4d; /* 赤色の背景 */
+  color: white; /* 文字色 */
+  font-size: 16px; /* フォントサイズ */
+  cursor: pointer; /* カーソルをポインターにする */
+  transition: background-color 0.3s ease; /* ホバー時の背景色変更のアニメーション */
+  margin: 10px 0; /* 上下に余白を追加 */
+  display: inline-block; /* インラインブロックにして、文字や他の要素と並べる */
+}
+
+/* ボタンのホバー時のスタイル */
+.button:hover {
+  background-color: #cc0000; /* ホバー時の背景色 */
+}
+
+/* リストアイテム全体のスタイル */
+.list-item {
+  display: flex; /* フレックスボックスを使用して、ボタンと文字を横並びにする */
+  align-items: center; /* 中央揃え */
+  justify-content: space-between; /* 要素間のスペースを均等に配置 */
+  padding: 10px; /* 内部の余白 */
+  border-bottom: 1px solid #ddd; /* ボトムボーダー */
+}
+
+/* リストアイテムのテキスト */
+.item-text {
+  flex: 1; /* テキストが利用できるスペースを最大限にする */
+  margin-right: 10px; /* テキストとボタンの間に余白を追加 */
+}

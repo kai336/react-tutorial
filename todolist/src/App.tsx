@@ -1,17 +1,21 @@
 import React, { useState } from 'react'
 import './App.css'
-import './components/Task'
+import './components/TodoItem'
+import TodoItem from './components/TodoItem';
+
+export type Todo = {
+  text: any;
+  inputValue: string;
+  id: number;
+  checked: boolean;
+};
 
 function App() {
   const [serial, setSerial] = useState<number>(0);
   const [todos, setTodos] = useState<Todo[]>([]);
   const [inputValue, setInputValue] = useState<string>("");
 
-  type Todo = {
-    inputValue: string;
-    id: number;
-    checked: boolean;
-  };
+  
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
@@ -31,39 +35,36 @@ function App() {
     setSerial(serial+1);
   };
 
-  const handleToggleCheck = (id: number) => {
-    setTodos(todos.map(todo =>
+  const handleToggle = (id: number) => {
+    setTodos(todos.map((todo: Todo) =>
       todo.id === id ? {...todo, checked: !todo.checked} : todo
       // 条件式 ? trueのときのreturn : falseのときのreturn
     ))
   }
 
   const handleDelete = (id: number) => {
-    setTodos(todos.filter(todo => todo.id !== id));
+    setTodos(todos.filter((todo: Todo) => todo.id !== id));
   }
 
   return (
-    <div className='App'>
-      <div>
-        <h2>Todoリスト with Typescript</h2>
-        <form onSubmit={(e)=>handleSubmit(e)}>
-          <input type='text' value={inputValue} onChange={(e)=>handleChange(e)} className='inputText' />
-          <input type='submit' value="create" className='submitButton' />
-        </form>
-        <ul>
-          {todos.map(todo => (
-            <li key={todo.id} className={`todo-item ${todo.checked ? 'checked' : ''}`}>
-              <input
-                type='checkbox'
-                checked={todo.checked}
-                onChange={()=>handleToggleCheck(todo.id)}
-              />
-              {todo.inputValue}
-              <button onClick={() => handleDelete(todo.id)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      </div>
+    <div>
+      <h2>Todoリスト with Typescript</h2>
+      <form onSubmit={handleSubmit}>
+        <input type='text' id='todo-input' value={inputValue} onChange={handleChange} className='inputText' />
+        <input type='submit' value="create" className='submitButton' />
+      </form>
+      <ul>
+        {todos.map((todo: Todo) => (
+          <TodoItem
+            key={todo.id}
+            id={todo.id}
+            text={todo.inputValue}
+            checked={todo.checked}
+            onToggle={handleToggle}
+            onDelete={handleDelete}
+          />
+        ))}
+      </ul>
     </div>
   )
 }

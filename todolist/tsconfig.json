@@ -7,5 +7,10 @@
     {
       "path": "./tsconfig.node.json"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "jsx": "react-jsx"  // または "react" (React 17以前のバージョン用)
+  },
+  "noImplicitAny": false
+  
 }
