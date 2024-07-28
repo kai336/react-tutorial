@@ -4,7 +4,6 @@ import './components/TodoItem'
 import TodoItem from './components/TodoItem';
 
 export type Todo = {
-  text: any;
   inputValue: string;
   id: number;
   checked: boolean;

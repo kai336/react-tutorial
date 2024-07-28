@@ -17,13 +17,20 @@
     - [viteでReact×TypeScript環境を爆速で作る最小版](https://qiita.com/teradonburi/items/fcdd900adb069811bfda)
 - 前提
     - node.js, npmが入っていること
-- Viteプロジェクトの作成
+- Viteプロジェクトの作成&パッケージインストール
 ```bash
 $ npm create vite@latest
+$ npm install
+$ npm install @types/react @types/react-dom
 ```
 - フレームワーク(React)と言語(Typescript + SWC)を選ぶ
 - ホットリロードの設定(windows)
     - [Vite でいいじゃん！ React の開発環境](https://note.com/kaisokaiso/n/nb3109f23fb5d)
+- 起動
+```bash
+$ cd your-project
+$ npm run dev
+```
 - 以上
 
 ## Todoリスト作った (`/todolist`)
@@ -39,5 +46,58 @@ $ npm create vite@latest
 ## 三目並べ作る (`/tic-tac-toe`)
 - 参考サイト
     - [React公式 チュートリアル：三目並べ](https://ja.react.dev/learn/tutorial-tic-tac-toe)
+- 学び
+    - `return`するhtmlは１つのタグで囲まれている必要がある
+    - `export default`でこのファイルのメイン関数として外部からアクセスできる
+    - `typescript`で型を明示して関数を書く方法
+        
+        ```typescript
+        // function
+        function Func(arg1: type1, arg2: type2, ...): returnType {
+            // processing data
+            return hogehoge;
+        }
+        // アロー関数
+        const allowFunc: (arg1: type1, arg2: type2, ...) => returnType = (arg1, arg2, ...) => {
+            //processing data
+            return hogehoge;
+        };
+        ```
+    - `typescript`で型を明示してReactコンポーネントを書く方法
+        ```typescript
+        type: AllowFuncProps = {
+            arg1: type1;
+            arg2: type2;
+            .
+            .
+            .
+        };
+        // functionの場合
+        function ComponentFunc({arg1, arg2, ...}: AllowFuncProps): JSX.Element {
+            // processing data
+            return (
+                <>hogehoge</>
+            );
+        }
+        // アロー関数の場合
+        const ComponentAllowFunc: React.FC<allowFuncProps> = ({ arg1, arg2, ...}) => {
+            // processing data
+            return (
+                <>hogehoge</>
+            );
+        }  
+        ```
+    - [React Developer Tools](https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=ja&utm_source=ext_sidebar)
+        - chromeの拡張機能
+        - ローカルで動いてるreact appのコンポーネントの様子を見ることができる
+        - 超便利！！！
+    - 子コンポーネントが持つデータは親の`state`で管理しておいたほうがいい
+        - リフトアップと呼ぶ
+        - propsでもろもろのデータを子に与える
+    - `variable = condition? trueの時の値 : falseの時の値`
+### 最強の敵を実装する `/src/Enemy.tsx`
+- 敵は後攻
+- 真ん中が空いてたらそこに打つ
+- 相手のリーチを検出したところに打つ
 
 ## Hooksを理解したい
