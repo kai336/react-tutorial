@@ -95,6 +95,9 @@ $ npm run dev
         - リフトアップと呼ぶ
         - propsでもろもろのデータを子に与える
     - `variable = condition? trueの時の値 : falseの時の値`
+    - `useState`のsetなんちゃらみたいな状態更新は非同期で行われるので、更新した後の値をすぐ使おうとすると前の値のままになってバグった。
+        - 次のレンダー以降に`useState`が返す値にのみ影響を与える
+        - https://ja.react.dev/reference/react/useState
 ### 最強の敵を実装する `/src/Enemy.tsx`
 - 敵は後攻
 - 真ん中が空いてたらそこに打つ
