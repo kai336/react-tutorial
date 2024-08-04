@@ -19,17 +19,17 @@
     - node.js, npmが入っていること
 - Viteプロジェクトの作成&パッケージインストール
 ```bash
-$ npm create vite@latest
-$ npm install
-$ npm install @types/react @types/react-dom
+npm create vite@latest
+npm install
+npm install @types/react @types/react-dom
 ```
 - フレームワーク(React)と言語(Typescript + SWC)を選ぶ
 - ホットリロードの設定(windows)
     - [Vite でいいじゃん！ React の開発環境](https://note.com/kaisokaiso/n/nb3109f23fb5d)
 - 起動
 ```bash
-$ cd your-project
-$ npm run dev
+cd your-project
+npm run dev
 ```
 - 以上
 
@@ -90,7 +90,6 @@ $ npm run dev
     - [React Developer Tools](https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=ja&utm_source=ext_sidebar)
         - chromeの拡張機能
         - ローカルで動いてるreact appのコンポーネントの様子を見ることができる
-        - 超便利！！！
     - 子コンポーネントが持つデータは親の`state`で管理しておいたほうがいい
         - リフトアップと呼ぶ
         - propsでもろもろのデータを子に与える
@@ -102,5 +101,59 @@ $ npm run dev
 - 敵は後攻
 - 真ん中が空いてたらそこに打つ
 - 相手のリーチを検出したところに打つ
+
+## `tic-tac-toe`をfirebaseでデプロイしてみる
+- 参考サイト
+    - [Firebaseでデプロイしよう！](https://qiita.com/hiroki-harada/items/ca22ac177db68e3c3796)
+    - [Firebaseの機能](https://note.com/techbits/n/n94c2baf41195)
+    - chatgpt
+- ブラウザからFirebaseのプロジェクト作成
+    - https://firebase.google.com/?hl=ja
+- `/tic-tac-toe`に移動して
+    ```bash
+    npm install -g firebase-tools
+    ```
+- Firebaseログイン
+    ```bash
+    firebase login
+    ```
+    - ブラウザが開くのでgoogleアカウントを選んでログイン
+- 初期設定
+    ```bash
+    firebase init
+    ```
+    >ウェブサイトやウェブアプリをホスティングしたい場合は、「Hosting」を選択します。
+
+    >リアルタイムデータ同期が必要な場合は、「Realtime Database」を選択します。
+
+    >大規模なデータセットや複雑なクエリを扱うアプリを開発する場合は、「Firestore」が適しています。
+
+    >ユーザーがアップロードするメディアファイルを扱う場合は、「Storage」を選択します。
+
+    >バックエンドロジックやAPIを実装する必要がある場合は、「Functions」を選択します。
+
+    >ローカルでの開発やテストを行いたい場合は、「Emulators」を選択します。
+
+    >GitHub Actionsを通じて自動デプロイを設定したい場合は、「Hosting: Set up GitHub Action deploys」を選択します。
+
+    - 今回はバックエンドがいらないのでHostingを選ぶ
+
+
+    ```bash
+    npm run build
+    ```
+    - 作ったreactアプリケーションをコンパイルし、本番環境向けにコンパクトにする
+    - 使ってない変数があるとエラーになる
+        ```bash
+        src/Square.tsx:2:10 - error TS6133: 'ChakraProvider' is declared but its value is never read.
+
+        2 import { ChakraProvider, Box, VStack, Heading, Button, Grid, useColorModeValue } from '@chakra-ui/react';
+        ```
+- Firebase Hostingにデプロイ
+    ```bash
+    firebase deploy
+    ```
+    
+
 
 ## Hooksを理解したい
