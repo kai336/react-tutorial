@@ -1,28 +1,67 @@
 import React, {useEffect, useState} from 'react';
 import './style.css';
-import Square, {SquareProps} from './Square'
+import Square from './Square'
 import EnemyPostAttack from './Enemy';
 import CalcWinner from './CalcWineer';
+import { ChakraProvider, Box, VStack, Heading, Button, Grid, Text, useColorModeValue, Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalFooter } from '@chakra-ui/react';
+import { GameResult } from './types';
+
+const ResultModal = ({ isOpen, onClose, result }) => (
+  <Modal isOpen={isOpen} onClose={onClose}>
+    <ModalOverlay />
+    <ModalContent>
+      <ModalHeader>{result === 'Draw' ? "It's a Draw!" : `Winner: ${result}`}</ModalHeader>
+      <ModalBody>
+        <Text>
+          {result === 'Draw' 
+            ? "The game ended in a draw." 
+            : `Congratulations to ${result} for winning the game!`}
+        </Text>
+      </ModalBody>
+      <ModalFooter>
+        <Button colorScheme="blue" mr={3} onClick={onClose}>
+          Close
+        </Button>
+      </ModalFooter>
+    </ModalContent>
+  </Modal>
+);
 
 export default function Board(): JSX.Element {
   // 親コンポーネント側で子コンポーネントのデータを保持したほうがいいらしい。
   // = 親コンポーネントへのリフトアップ
   
   // いまxの番か？
-  const [xIsNext, setIsNext] = useState(true);
-
+  const [xIsNext, setIsNext] = useState<boolean>(true);
   //1 playerか？
-  const [isAlone, setIsAlone] = useState(false);
-
+  const [isAlone, setIsAlone] = useState<boolean>(false);
   // 各スクエアのoかxを保存してる -> ゲームの勝利判定に使える
-  const [squares, setSquares] = useState<(string | null)[]>(Array(9).fill(null));
+  const [squares, setSquares] = useState<GameResult[]>(Array(9).fill(null));
+  // ゲームの結果
+  const [result, setResult] = useState<GameResult>(null);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  // 結果が決まったらリザルト画面表示
+  useEffect(() => {
+    if (result) {
+      setIsModalOpen(true);
+    };
+  }, [result]);
 
   // squaresが更新されたら状況判断してaiが打つ
   useEffect(() => {
-    if (isAlone && !xIsNext && !CalcWinner(squares)) {
+    const calcRes: GameResult = CalcWinner(squares);
+    if (calcRes) {
+      setResult(calcRes);
+    } else if (isAlone && !xIsNext) {
       aiPlayer();
-    }
+    };
   }, [squares]);
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    handleReset();
+  };
 
   const handlePlayer = () => {
     setIsAlone(!isAlone);
@@ -95,28 +134,58 @@ export default function Board(): JSX.Element {
   };
   if (!winner && isFull(squares)) {
     status = 'Draw';
-  }
+  };
+
+  // return (
+  //   <>
+  //     <button onClick={handlePlayer}>Toggle mode</button>
+  //     <button onClick={handleReset}>Reset</button>
+  //     <div className='status'>{!isAlone && status}{isAlone && 'ai mode'}</div>
+  //     <div className='board-row'>
+  //       {renderSquare(0)}
+  //       {renderSquare(1)}
+  //       {renderSquare(2)}
+  //     </div>
+  //     <div className='board-row'>
+  //       {renderSquare(3)}
+  //       {renderSquare(4)}
+  //       {renderSquare(5)}
+  //     </div>
+  //     <div className='board-row'>
+  //       {renderSquare(6)}
+  //       {renderSquare(7)}
+  //       {renderSquare(8)}
+  //     </div>
+  //   </>
+  // );
 
   return (
-    <>
-      <button onClick={handlePlayer}>Toggle mode</button>
-      <button onClick={handleReset}>Reset</button>
-      <div className='status'>{!isAlone && status}{isAlone && 'ai mode'}</div>
-      <div className='board-row'>
-        {renderSquare(0)}
-        {renderSquare(1)}
-        {renderSquare(2)}
-      </div>
-      <div className='board-row'>
-        {renderSquare(3)}
-        {renderSquare(4)}
-        {renderSquare(5)}
-      </div>
-      <div className='board-row'>
-        {renderSquare(6)}
-        {renderSquare(7)}
-        {renderSquare(8)}
-      </div>
-    </>
+    <ChakraProvider>
+      <Box minHeight="100vh" display="flex" alignItems="center" justifyContent="center">
+        <VStack spacing={8}>
+          <Heading as="h1" size="2xl">Tic-Tac-Toe</Heading>
+          <Box>
+            <Button onClick={handlePlayer} mr={4}>
+              {isAlone ? 'Switch to Multiplayer' : 'Switch to AI Mode'}
+            </Button>
+            <Button onClick={handleReset}>Reset Game</Button>
+          </Box>
+          <Text fontSize="xl" fontWeight="bold">
+            {!isAlone && !result && `Next player: ${xIsNext ? 'X' : 'O'}`}
+            {isAlone && 'AI Mode'}
+          </Text>
+          <Grid templateColumns="repeat(3, 1fr)" gap={4}>
+            {squares.map((value, i) => (
+              <Square key={i} value={value} onClick={() => handleSquareClick(i)} />
+            ))}
+          </Grid>
+        </VStack>
+      </Box>
+      <ResultModal 
+        isOpen={isModalOpen} 
+        onClose={closeModal} 
+        result={result}
+      />
+    </ChakraProvider>
   );
 };

@@ -1,0 +1,1 @@
+export type GameResult = 'X' | 'O' | 'draw' | null;
