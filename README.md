@@ -172,10 +172,9 @@ npm run dev
         - https://qiita.com/mzmz__02/items/12d198b696efa8b29bda
         - https://qiita.com/mzmz__02/items/63f2624e00c02be2f942
 - Firebase Hostingにデプロイ
+    - `firebase.json`にビルドしたディレクトリを指定
     ```bash
     firebase deploy
     ```
-    
-
 
 ## Hooksを理解したい
