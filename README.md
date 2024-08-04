@@ -97,10 +97,28 @@ npm run dev
     - `useState`のsetなんちゃらみたいな状態更新は非同期で行われるので、更新した後の値をすぐ使おうとすると前の値のままになってバグった。
         - 次のレンダー以降に`useState`が返す値にのみ影響を与える
         - https://ja.react.dev/reference/react/useState
+    - 配列を結合したいとき
+        ```typescript
+        const array1: number[];
+        const array2: number[];
+        const combinedArray: number[] = [...array1, ...array2];
+        ```
+        - スプレッド構文
 ### 最強の敵を実装する `/src/Enemy.tsx`
 - 敵は後攻
 - 真ん中が空いてたらそこに打つ
 - 相手のリーチを検出したところに打つ
+- めんどくさかったバグ
+    - `useState`, `useEffect`絡みのバグ
+        - ２回目以降のプレイにおいて結果表示モーダルがでてこない
+        - ゲームの結果を格納する`result`という`useState`変数の変更に応じて`useEffect`でモーダルを開いていた。ゲームのリセット時に`result`を初期化(`=null`)しておらず結果が同じ場合変数の中身が変わっていなかった。そのためモーダルを開く`useEffect`が走らなかった。
+    - `var: number | null`という変数があるとき`if (var)`で、`null`だけをはじこうとしたけど`var=0`のときもはじかれてしまう
+    
+- 最弱の敵を実装する
+    - 打つべきところに打たない
+        - 真ん中打たない
+        - リーチに打たない
+        - 角に打たない
 
 ## `tic-tac-toe`をfirebaseでデプロイしてみる
 - 参考サイト
@@ -149,6 +167,10 @@ npm run dev
 
         2 import { ChakraProvider, Box, VStack, Heading, Button, Grid, useColorModeValue } from '@chakra-ui/react';
         ```
+    - コードの汚さに気づく
+        - prettier, eslintでコードフォーマット
+        - https://qiita.com/mzmz__02/items/12d198b696efa8b29bda
+        - https://qiita.com/mzmz__02/items/63f2624e00c02be2f942
 - Firebase Hostingにデプロイ
     ```bash
     firebase deploy
